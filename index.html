@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='white'/%3E%3Cg fill='none' stroke='black' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M23 22L12 32l11 10M41 22l11 10-11 10M36 17l-8 30'/%3E%3C/g%3E%3C/svg%3E">
-<title>| Portfolio|</title>
+<title>| Portfolio |</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
 <style>
 :root{--sage:#0a0a0a;--teal:#7c3aed;--teal-dark:#5b21b6;--lilac:#c4b5fd;--side:#140a26;--side-line:#2e1a4d;--side-text:#d8ccf5;--violet:#8b5cf6;--white:#fff;--ink:#1f2d2a;--mist:#f1f6f4;--line:#e3e8e6;--side-w:190px}
@@ -154,8 +154,7 @@ function show() {
   if (!views.some(v => v.id === id)) id = "home";
   views.forEach(v => v.classList.toggle("active", v.id === id));
   links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
-  const t = id === "home" ? CONFIG.name : id[0].toUpperCase() + id.slice(1);
-  document.title = (id === "home" ? "" : t + " | ") + CONFIG.name + (id === "home" ? " | Portfolio" : "");
+  document.title = "| Portfolio |";
   window.scrollTo(0, 0);
 }
 addEventListener("hashchange", show);
@@ -177,7 +176,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
 }
 (function oneko() {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const SPRITE = "public/assets/oneko.gif";
+  const SPRITE = "public/oneko.gif";
   const el = document.createElement("div");
   let x = 32, y = 32, mx = 0, my = 0, frames = 0, idleTime = 0, idleAnim = null, idleFrame = 0, last = 0;
   const speed = 10;
