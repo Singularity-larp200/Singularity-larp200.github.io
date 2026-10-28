@@ -282,6 +282,54 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
     requestAnimationFrame(loop);
   })();
 })();
+(function music() {
+  const SOURCES = ["public/assets/peace.mp3", "public/peace.mp3"];
+  const TARGET = 0.5;
+  const audio = new Audio();
+  let idx = 0, started = false, fade = null;
+  audio.loop = true;
+  audio.volume = 0;
+  audio.preload = "auto";
+  audio.src = SOURCES[idx];
+  audio.addEventListener("error", () => {
+    if (idx < SOURCES.length - 1) {
+      idx++;
+      audio.src = SOURCES[idx];
+      if (started) audio.play().catch(() => {});
+    }
+  });
+  function fadeTo(target, ms) {
+    clearInterval(fade);
+    const from = audio.volume, t0 = Date.now();
+    fade = setInterval(() => {
+      const p = Math.min((Date.now() - t0) / ms, 1);
+      audio.volume = from + (target - from) * p;
+      if (p === 1) {
+        clearInterval(fade);
+        if (target === 0) audio.pause();
+      }
+    }, 16);
+  }
+  function play() {
+    audio.play().then(() => fadeTo(TARGET, 800)).catch(() => {});
+  }
+  function start() {
+    if (started) return;
+    started = true;
+    play();
+  }
+  addEventListener("pointerdown", start, { once: true });
+  addEventListener("keydown", start, { once: true });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (!audio.paused) fadeTo(0, 500);
+    } else if (started) {
+      play();
+    }
+  });
+  addEventListener("blur", () => { if (!audio.paused) fadeTo(0, 500); });
+  addEventListener("focus", () => { if (started) play(); });
+})();
 </script>
 </body>
 </html>
